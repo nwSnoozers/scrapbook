@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View, TextInput } from "react-native";
+import { StyleSheet, Text, View, TextInput, ScrollView } from "react-native";
 
 // date picker import
 // import DatePicker from "react-native-date-picker";
@@ -39,16 +39,13 @@ const MemoryPage = () => {
 	};
 
 	return (
-		<View
-			style={{
-				flex: 1,
-				justifyContent: "center",
-				alignItems: "center",
-			}}
-		>
+		<ScrollView style={styles.scrollView}>
 			<Text>Memory</Text>
 			<Text>Date</Text>
-			<DatePicker onSelectedChange={(date) => setSelectedDate(date)} />
+			<DatePicker
+				style={datePickerStyles.calendar}
+				onSelectedChange={(date) => setSelectedDate(date)}
+			/>
 			<Text>Destination</Text>
 			<TextInput
 				style={styles.locationInput}
@@ -82,9 +79,20 @@ const MemoryPage = () => {
 				value={note}
 			/>
 			<StatusBar style="auto" />
-		</View>
+		</ScrollView>
 	);
 };
+
+const datePickerStyles = StyleSheet.create({
+	calendar: {
+		elevation: 2,
+		height: 200,
+		// width: 200,
+		backgroundColor: "#efefef",
+		position: "relative",
+		overflow: "hidden",
+	},
+});
 
 const imageUploaderStyles = StyleSheet.create({
 	container: {
@@ -128,11 +136,15 @@ const styles = StyleSheet.create({
 		borderWidth: 1,
 		padding: 10,
 	},
+	scrollView: {
+		marginHorizontal: 20,
+		marginTop: 100,
+	},
 	container: {
 		flex: 1,
 		backgroundColor: "#fff",
 		alignItems: "top",
-		justifyContent: "left",
+		justifyContent: "center",
 	},
 });
 
