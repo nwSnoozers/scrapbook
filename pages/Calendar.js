@@ -6,8 +6,8 @@ import { StyleSheet, Text, View, TextInput, ScrollView } from "react-native";
 // import DatePicker from "react-native-date-picker";
 import { Button } from "react-native";
 import DatePicker from "react-native-modern-datepicker";
-import { View, Text, Image } from 'react-native'
-import { Card, ListItem, Button, Icon } from 'react-native-elements'
+import { View, Text, Image } from "react-native";
+import { Card, ListItem, Button, Icon } from "react-native-elements";
 
 // photo upload imports
 import { Image, Platform, TouchableOpacity } from "react-native";
@@ -140,7 +140,7 @@ const styles = StyleSheet.create({
 	},
 	scrollView: {
 		marginHorizontal: 20,
-		marginTop: 100,
+		// marginTop: 100,
 	},
 	container: {
 		flex: 1,

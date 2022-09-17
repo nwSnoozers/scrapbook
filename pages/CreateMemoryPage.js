@@ -1,12 +1,28 @@
 import React, { useState, useEffect } from "react";
-import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View, TextInput, ScrollView } from "react-native";
+// import { StatusBar } from "expo-status-bar";
+import {
+	StyleSheet,
+	Text,
+	View,
+	TextInput,
+	ScrollView,
+	SafeAreaView,
+	StatusBar,
+	Dimensions,
+} from "react-native";
+import {
+	useFonts,
+	SpaceMono_400Regular,
+	SpaceMono_400Regular_Italic,
+	SpaceMono_700Bold,
+	SpaceMono_700Bold_Italic,
+} from "@expo-google-fonts/space-mono";
 
 // date picker import
 // import DatePicker from "react-native-date-picker";
 import { Button } from "react-native";
 import DatePicker from "react-native-modern-datepicker";
-import { Image } from 'react-native'
+import { Image } from "react-native";
 
 // photo upload imports
 import { Platform, TouchableOpacity } from "react-native";
@@ -14,9 +30,17 @@ import { AntDesign } from "@expo/vector-icons";
 import * as ImagePicker from "expo-image-picker";
 
 // star rating component
-import StarRating from 'react-native-star-rating-widget';
+import StarRating from "react-native-star-rating-widget";
 
 const CreateMemoryPage = () => {
+	// fonts
+	let [fontsLoaded] = useFonts({
+		SpaceMono_400Regular,
+		SpaceMono_400Regular_Italic,
+		SpaceMono_700Bold,
+		SpaceMono_700Bold_Italic,
+	});
+
 	// text input consts
 	const [note, onChangeNote] = React.useState("Add your notes here");
 	const [location, onChangeLocation] = React.useState("Where did you go?");
@@ -44,26 +68,28 @@ const CreateMemoryPage = () => {
 	};
 
 	return (
-		<View style={styles.parentView}>
-			<ScrollView contentContainerStyle={styles.contentContainer} style={styles.scrollView}>
-				<Text>Create new memory</Text>
-				<Text>Select your date</Text>
+		<SafeAreaView style={styles.parentView}>
+			<ScrollView
+				contentContainerStyle={styles.contentContainer}
+				style={styles.scrollView}
+			>
+				<Text style={[styles.dateTitle, styles.text]}>
+					Date goes here
+				</Text>
+				<Text style={[styles.h2, styles.text]}>Select your date</Text>
 				<DatePicker
 					style={datePickerStyles.calendar}
 					onSelectedChange={(date) => setSelectedDate(date)}
 				/>
-				<Text>Destination</Text>
+				<Text style={[styles.h2, styles.text]}>Where did you go?</Text>
 				<TextInput
 					style={styles.locationInput}
 					onChangeText={onChangeLocation}
 					value={location}
 				/>
-				<Text>Rate your experience</Text>
-				<StarRating
-					rating={rating}
-					onChange={setRating}
-				/>
-				<Text>Add media</Text>
+				<Text style={[styles.h2, styles.text]}>Your rating</Text>
+				<StarRating rating={rating} onChange={setRating} />
+				<Text style={[styles.h2, styles.text]}>Media</Text>
 				<View style={imageUploaderStyles.container}>
 					{image && (
 						<Image
@@ -81,20 +107,20 @@ const CreateMemoryPage = () => {
 						</TouchableOpacity>
 					</View>
 				</View>
-				<Text>Notes Section</Text>
+				<Text style={[styles.h2, styles.text]}>Notes Section</Text>
 				<TextInput
 					style={styles.notesInput}
 					onChangeText={onChangeNote}
 					value={note}
 				/>
 				<Button
-					onPress={() => Alert.alert('Saved!')}
+					onPress={() => Alert.alert("Saved!")}
 					title="Save"
 					color="#841584"
 				/>
 				{/* <StatusBar style="auto" /> */}
 			</ScrollView>
-		</View>
+		</SafeAreaView>
 	);
 };
 
@@ -102,7 +128,6 @@ const datePickerStyles = StyleSheet.create({
 	calendar: {
 		elevation: 2,
 		height: 200,
-		// width: 200,
 		backgroundColor: "#efefef",
 		position: "relative",
 		overflow: "hidden",
@@ -135,44 +160,53 @@ const imageUploaderStyles = StyleSheet.create({
 });
 
 const styles = StyleSheet.create({
+	text: {
+		color: "#1B463E",
+		// font not working
+		fontFamily: "SpaceMono_700Bold",
+	},
+	dateTitle: {
+		fontSize: 40,
+		fontWeight: "bold",
+		marginTop: 20,
+		marginBottom: 20,
+	},
+	h2: {
+		fontSize: 20,
+		fontWeight: "bold",
+		marginTop: 20,
+		marginBottom: 10,
+	},
 	locationInput: {
 		height: 40,
-		width: "80%",
+		width: "99%",
 		textAlignVertical: "top",
-		margin: 12,
+		marginVertical: 12,
 		borderWidth: 1,
 		padding: 10,
 	},
 	notesInput: {
 		height: "30%",
-		width: "80%",
+		width: "99%",
 		textAlignVertical: "top",
-		margin: 12,
+		marginVertical: 12,
 		borderWidth: 1,
-		padding: 10,
-	},
-	scrollView: {
-		height: '100%',
-		width: '80%',
-		margin: 20,
-		alignSelf: 'center',
 		padding: 10,
 	},
 	parentView: {
 		flex: 1,
-		height: "100%",
-		width: "100%"
+		height: "auto",
+		maxHeight: Dimensions.get("window").height,
+		// paddingTop: StatusBar.currentHeight,
+		backgroundColor: "#F3F7F5",
 	},
+	scrollView: {
+		width: "80%",
+		alignSelf: "center",
+	},
+
 	contentContainer: {
-		justifyContent: 'center',
-		alignItems: 'center',
-		paddingBottom: 30,
-	},
-	container: {
-		flex: 1,
-		backgroundColor: "#fff",
-		alignItems: "top",
-		justifyContent: "center",
+		flexGrow: 1,
 	},
 });
 
