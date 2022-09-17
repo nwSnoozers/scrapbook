@@ -3,7 +3,9 @@ import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View, TextInput } from "react-native";
 
 // date picker import
-import DatePicker from "react-native-date-picker";
+// import DatePicker from "react-native-date-picker";
+import { Button } from "react-native";
+import DatePicker from "react-native-modern-datepicker";
 
 // photo upload imports
 import { Image, Platform, TouchableOpacity } from "react-native";
@@ -14,6 +16,11 @@ const MemoryPage = () => {
 	// text input consts
 	const [note, onChangeNote] = React.useState("Add your notes here");
 	const [location, onChangeLocation] = React.useState("Where did you go?");
+
+	// date picker consts
+	// const [date, setDate] = useState(new Date());
+	// const [open, setOpen] = useState(false);
+	const [selectedDate, setSelectedDate] = useState("");
 
 	// image upload consts
 	const [image, setImage] = useState(null);
@@ -41,6 +48,7 @@ const MemoryPage = () => {
 		>
 			<Text>Memory</Text>
 			<Text>Date</Text>
+			<DatePicker onSelectedChange={(date) => setSelectedDate(date)} />
 			<Text>Destination</Text>
 			<TextInput
 				style={styles.locationInput}
