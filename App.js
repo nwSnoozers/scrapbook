@@ -1,7 +1,7 @@
 import React from "react";
 import { StatusBar } from "expo-status-bar";
-import MemoryPage from "./pages/Memory";
+import CreateMemoryPage from "./pages/CreateMemoryPage";
 
 export default function App() {
-	return <MemoryPage></MemoryPage>;
+	return <CreateMemoryPage></CreateMemoryPage>;
 }
