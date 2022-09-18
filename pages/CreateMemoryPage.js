@@ -102,6 +102,20 @@ const CreateMemoryPage = () => {
 		}
 	};
 
+	function getPhotoUris () {
+		var imageUris = [];
+		if (image1) {
+			imageUris.push(image1);
+		}
+		if (image2) {
+			imageUris.push(image2);
+		}
+		if (image) {
+			imageUris.push(image);
+		}
+		return imageUris;
+	}
+
 	return (
 		<View style={styles.parentView}>
 			<View
@@ -236,19 +250,26 @@ const CreateMemoryPage = () => {
 					/>
 					<TouchableOpacity
 						style={styles.saveButton}
-						onPress={() => {
-							// axios({
-							// 	method: 'post',
-							// 	url: 'http://localhost:3000/memories',
-							// 	data: {
-							// 	  date: selectedDate,
-							// 	  destination: location,
-							// 	  rating: rating,
-							// 	  photos: image.uri,
-							// 	  notes: note
-							// 	}
-							//   });
-						}}
+						onPress={async () => {
+							const body = {
+								date: selectedDate,
+								destination: location,
+								rating: rating,
+								photos: getPhotoUris(),
+								notes: note
+							  }
+							await fetch(
+							  `http://10.33.134.6:3000/memories`,
+							  {
+								method: 'POST',
+								headers: {
+								  'Content-Type': 'application/json',
+								},
+								body: JSON.stringify(body)
+							  }
+							);
+					}
+				}
 						title="Save"
 					>
 						<Text style={styles.saveText}>Save</Text>
