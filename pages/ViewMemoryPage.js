@@ -32,7 +32,7 @@ import * as ImagePicker from "expo-image-picker";
 import StarRating from "react-native-star-rating-widget";
 
 // axios
-// var axios = require('axios');
+// import axios from "axios";
 
 const CreateMemoryPage = () => {
 	// fonts
@@ -43,53 +43,10 @@ const CreateMemoryPage = () => {
 		SpaceMono_700Bold_Italic,
 	});
 
-	// text input consts
-	const [note, onChangeNote] = React.useState("Add your notes here");
-	const [location, onChangeLocation] = React.useState("Where did you go?");
-	const [rating, setRating] = useState(0);
-
-	// date picker consts + functions
-	const [selectedDate, setSelectedDate] = useState(getToday());
-
-	let displayDate = getFormatedDate(selectedDate, "MMM DD YYYY");
-	console.log("selectedDate: ", selectedDate);
-	console.log("displayDate: ", displayDate);
-
-	const onSelectedChangeHandler = (date) => {
-		setSelectedDate(date);
-		displayDate = getFormatedDate(selectedDate, "MMM DD YYYY");
-	};
-
-	// image upload consts
-	const [image, setImage] = useState(null);
-
-	const addImage = async () => {
-		let _image = await ImagePicker.launchImageLibraryAsync({
-			mediaTypes: ImagePicker.MediaTypeOptions.Images,
-			allowsEditing: true,
-			aspect: [4, 3],
-			quality: 1,
-		});
-		console.log(JSON.stringify(_image));
-		if (!_image.cancelled) {
-			setImage(_image.uri);
-		}
-	};
-
 	return (
-		<View style={styles.parentView}>
-			<View style={{
-				width: "100%",
-				flex: 1,
-				display: "flex",
-				flexDirection: "column",
-				paddingBottom: 90,
-				paddingLeft: 24,
-				paddingRight: 24
-			}}>
-
+		<SafeAreaView style={styles.parentView}>
 			<ScrollView
-				// contentContainerStyle={styles.contentContainer}
+				contentContainerStyle={styles.contentContainer}
 				style={styles.scrollView}
 			>
 				<Text style={[styles.dateTitle, styles.text]}>
@@ -122,7 +79,7 @@ const CreateMemoryPage = () => {
 					{image && (
 						<Image
 							source={{ uri: image }}
-							style={{ width: 200 }}
+							style={{ width: 200, height: 200 }}
 						/>
 					)}
 					<View style={imageUploaderStyles.uploadBtnContainer}>
@@ -143,32 +100,31 @@ const CreateMemoryPage = () => {
 				/>
 				<Button
 					onPress={() => {
-						// axios({
-						// 	method: 'post',
-						// 	url: 'http://localhost:3000/memories',
-						// 	data: {
-						// 	  date: selectedDate,
-						// 	  destination: location,
-						// 	  rating: rating,
-						// 	  photos: image.uri,
-						// 	  notes: note
-						// 	}
-						//   });
+						axios({
+							method: 'post',
+							url: 'http://localhost:3000/memories',
+							data: {
+							  date: selectedDate,
+							  destination: location,
+							  rating: rating,
+							  photos: image.uri,
+							  notes: note
+							}
+						  });
 					}}
 					title="Save"
 					color="#841584"
 				/>
 				{/* <StatusBar style="auto" /> */}
 			</ScrollView>
-			</View>
-		</View>
+		</SafeAreaView>
 	);
 };
 
 const datePickerStyles = StyleSheet.create({
 	calendar: {
 		elevation: 2,
-		// height: 200,
+		height: 200,
 		backgroundColor: "#efefef",
 		position: "relative",
 		overflow: "hidden",
@@ -179,7 +135,6 @@ const imageUploaderStyles = StyleSheet.create({
 	container: {
 		elevation: 2,
 		height: 200,
-		flex: 1, 
 		width: 200,
 		backgroundColor: "#efefef",
 		position: "relative",
@@ -192,7 +147,7 @@ const imageUploaderStyles = StyleSheet.create({
 		bottom: 0,
 		backgroundColor: "lightgrey",
 		width: "100%",
-		// height: "25%",
+		height: "25%",
 	},
 	uploadBtn: {
 		display: "flex",
@@ -219,7 +174,7 @@ const styles = StyleSheet.create({
 		marginBottom: 10,
 	},
 	locationInput: {
-		// height: 40,
+		height: 40,
 		width: "99%",
 		textAlignVertical: "top",
 		marginVertical: 12,
@@ -227,7 +182,7 @@ const styles = StyleSheet.create({
 		padding: 10,
 	},
 	notesInput: {
-		// height: "30%",
+		height: "30%",
 		width: "99%",
 		textAlignVertical: "top",
 		marginVertical: 12,
@@ -236,18 +191,15 @@ const styles = StyleSheet.create({
 		overflow: "hidden",
 	},
 	parentView: {
-		flex: 1,
+		// flex: 1,
 		// height: "auto",
 		backgroundColor: "#F3F7F5",
-		borderColor: "green",
-		borderWidth: 1,
 	},
 	scrollView: {
-		// flex: 1,
-		// display: "flex",
-		// width: "80%",
-		// alignSelf: "center",
+		width: "80%",
+		alignSelf: "center",
 	},
+
 	contentContainer: {
 		// flexGrow: 1,
 	},

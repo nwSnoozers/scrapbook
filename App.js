@@ -83,7 +83,7 @@ export default function App() {
 					}} 
 		/>
 		<Tab.Screen name="Create" 
-			component={CreateMemoryPage} 
+			component={CreateMemoryPage}
 			options={{
 				tabBarIcon: ({focused}) => (
 					<View style={{alignItems: 'center', justifyContent: 'center', top: 10}}>
