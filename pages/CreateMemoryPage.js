@@ -31,6 +31,9 @@ import * as ImagePicker from "expo-image-picker";
 // star rating component
 import StarRating from "react-native-star-rating-widget";
 
+// axios
+import axios from "axios";
+
 const CreateMemoryPage = () => {
 	// fonts
 	let [fontsLoaded] = useFonts({
@@ -129,7 +132,19 @@ const CreateMemoryPage = () => {
 					value={note}
 				/>
 				<Button
-					onPress={() => Alert.alert("Saved!")}
+					onPress={() => {
+						axios({
+							method: 'post',
+							url: 'http://localhost:3000/memories',
+							data: {
+							  date: selectedDate,
+							  destination: location,
+							  rating: rating,
+							  photos: image.uri,
+							  notes: note
+							}
+						  });
+					}}
 					title="Save"
 					color="#841584"
 				/>
