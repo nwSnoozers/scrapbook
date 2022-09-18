@@ -44,8 +44,8 @@ const CreateMemoryPage = () => {
 	});
 
 	// text input consts
-	const [note, onChangeNote] = React.useState("Add your notes here");
 	const [location, onChangeLocation] = React.useState("Where did you go?");
+	const [note, onChangeNote] = React.useState("What stood out from today?");
 	const [rating, setRating] = useState(0);
 
 	// date picker consts + functions
@@ -133,7 +133,7 @@ const CreateMemoryPage = () => {
 						Where did you go?
 					</Text>
 					<TextInput
-						style={styles.locationInput}
+						style={[styles.locationInput, styles.input]}
 						onChangeText={onChangeLocation}
 						value={location}
 					/>
@@ -230,11 +230,12 @@ const CreateMemoryPage = () => {
 					</ScrollView>
 					<Text style={[styles.h2, styles.text]}>Notes Section</Text>
 					<TextInput
-						style={styles.notesInput}
+						style={[styles.notesInput, styles.input]}
 						onChangeText={onChangeNote}
 						value={note}
 					/>
-					<Button
+					<TouchableOpacity
+						style={styles.saveButton}
 						onPress={() => {
 							// axios({
 							// 	method: 'post',
@@ -249,8 +250,9 @@ const CreateMemoryPage = () => {
 							//   });
 						}}
 						title="Save"
-						color="#841584"
-					/>
+					>
+						<Text style={styles.saveText}>Save</Text>
+					</TouchableOpacity>
 					{/* <StatusBar style="auto" /> */}
 				</ScrollView>
 			</View>
@@ -310,20 +312,23 @@ const styles = StyleSheet.create({
 		marginTop: 20,
 		marginBottom: 10,
 	},
+	input: {
+		borderRadius: 8,
+		borderWidth: 1,
+		borderColor: "#1B463E",
+	},
 	locationInput: {
-		// height: 40,
 		width: "99%",
 		textAlignVertical: "top",
 		marginVertical: 12,
-		borderWidth: 1,
 		padding: 10,
 	},
 	notesInput: {
-		// height: "30%",
+		flex: 1,
+		height: 100,
 		width: "99%",
 		textAlignVertical: "top",
 		marginVertical: 12,
-		borderWidth: 1,
 		padding: 10,
 		overflow: "hidden",
 	},
@@ -352,6 +357,28 @@ const styles = StyleSheet.create({
 		flex: 2,
 		alignSelf: "center",
 		marginTop: 10,
+	},
+	saveButton: {
+		paddingTop: 15,
+		paddingBottom: 15,
+		backgroundColor: "#1B463E",
+		borderRadius: 8,
+	},
+	saveText: {
+		color: "#ffffff",
+		fontWeight: "bold",
+		textAlign: "center",
+	},
+	deleteMemoryButton: {
+		paddingTop: 15,
+		paddingBottom: 15,
+		borderColor: "#1B463E",
+		borderRadius: 8,
+	},
+	deleteMemoryText: {
+		color: "#1B463E",
+		fontWeight: "bold",
+		textAlign: "center",
 	},
 });
 
