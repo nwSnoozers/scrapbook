@@ -52,8 +52,6 @@ const CreateMemoryPage = () => {
 	const [selectedDate, setSelectedDate] = useState(getToday());
 
 	let displayDate = getFormatedDate(selectedDate, "MMM DD YYYY");
-	console.log("selectedDate: ", selectedDate);
-	console.log("displayDate: ", displayDate);
 
 	const onSelectedChangeHandler = (date) => {
 		setSelectedDate(date);
@@ -61,7 +59,35 @@ const CreateMemoryPage = () => {
 	};
 
 	// image upload consts
+	const [image1, setImage1] = useState(null);
+	const [image2, setImage2] = useState(null);
 	const [image, setImage] = useState(null);
+
+	const addImage1 = async () => {
+		let _image = await ImagePicker.launchImageLibraryAsync({
+			mediaTypes: ImagePicker.MediaTypeOptions.Images,
+			allowsEditing: true,
+			aspect: [4, 3],
+			quality: 1,
+		});
+		console.log(JSON.stringify(_image));
+		if (!_image.cancelled) {
+			setImage1(_image.uri);
+		}
+	};
+
+	const addImage2 = async () => {
+		let _image = await ImagePicker.launchImageLibraryAsync({
+			mediaTypes: ImagePicker.MediaTypeOptions.Images,
+			allowsEditing: true,
+			aspect: [4, 3],
+			quality: 1,
+		});
+		console.log(JSON.stringify(_image));
+		if (!_image.cancelled) {
+			setImage2(_image.uri);
+		}
+	};
 
 	const addImage = async () => {
 		let _image = await ImagePicker.launchImageLibraryAsync({
@@ -78,88 +104,155 @@ const CreateMemoryPage = () => {
 
 	return (
 		<View style={styles.parentView}>
-			<View style={{
-				width: "100%",
-				flex: 1,
-				display: "flex",
-				flexDirection: "column",
-				paddingBottom: 90,
-				paddingLeft: 24,
-				paddingRight: 24
-			}}>
-
-			<ScrollView
-				// contentContainerStyle={styles.contentContainer}
-				style={styles.scrollView}
+			<View
+				style={{
+					width: "100%",
+					flex: 1,
+					display: "flex",
+					flexDirection: "column",
+					paddingBottom: 90,
+					paddingLeft: 24,
+					paddingRight: 24,
+				}}
 			>
-				<Text style={[styles.dateTitle, styles.text]}>
-					{displayDate}
-				</Text>
-				<Text style={[styles.h2, styles.text]}>Select your date</Text>
-				<DatePicker
-					style={datePickerStyles.calendar}
-					onSelectedChange={onSelectedChangeHandler}
-				/>
-				<Text style={[styles.h2, styles.text]}>Where did you go?</Text>
-				<TextInput
-					style={styles.locationInput}
-					onChangeText={onChangeLocation}
-					value={location}
-				/>
-				<View style={styles.ratingView}>
-					<Text style={[styles.h2, styles.text, styles.ratingText]}>
-						Your rating
+				<ScrollView
+					// contentContainerStyle={styles.contentContainer}
+					style={styles.scrollView}
+				>
+					<Text style={[styles.dateTitle, styles.text]}>
+						{displayDate}
 					</Text>
-					<StarRating
-						style={styles.ratingStars}
-						rating={rating}
-						onChange={setRating}
+					<Text style={[styles.h2, styles.text]}>
+						Select your date
+					</Text>
+					<DatePicker
+						style={datePickerStyles.calendar}
+						onSelectedChange={onSelectedChangeHandler}
 					/>
-				</View>
-
-				<Text style={[styles.h2, styles.text]}>Media</Text>
-				<View style={imageUploaderStyles.container}>
-					{image && (
-						<Image
-							source={{ uri: image }}
-							style={{ width: 200 }}
-						/>
-					)}
-					<View style={imageUploaderStyles.uploadBtnContainer}>
-						<TouchableOpacity
-							onPress={addImage}
-							style={imageUploaderStyles.uploadBtn}
+					<Text style={[styles.h2, styles.text]}>
+						Where did you go?
+					</Text>
+					<TextInput
+						style={styles.locationInput}
+						onChangeText={onChangeLocation}
+						value={location}
+					/>
+					<View style={styles.ratingView}>
+						<Text
+							style={[styles.h2, styles.text, styles.ratingText]}
 						>
-							<Text>{image ? "Edit" : "Upload"} Image</Text>
-							<AntDesign name="camera" size={20} color="black" />
-						</TouchableOpacity>
+							Your rating
+						</Text>
+						<StarRating
+							style={styles.ratingStars}
+							rating={rating}
+							onChange={setRating}
+						/>
 					</View>
-				</View>
-				<Text style={[styles.h2, styles.text]}>Notes Section</Text>
-				<TextInput
-					style={styles.notesInput}
-					onChangeText={onChangeNote}
-					value={note}
-				/>
-				<Button
-					onPress={() => {
-						// axios({
-						// 	method: 'post',
-						// 	url: 'http://localhost:3000/memories',
-						// 	data: {
-						// 	  date: selectedDate,
-						// 	  destination: location,
-						// 	  rating: rating,
-						// 	  photos: image.uri,
-						// 	  notes: note
-						// 	}
-						//   });
-					}}
-					title="Save"
-					color="#841584"
-				/>
-				{/* <StatusBar style="auto" /> */}
-			</ScrollView>
+
+					<Text style={[styles.h2, styles.text]}>Media</Text>
+					<ScrollView horizontal={true}>
+						<View style={imageUploaderStyles.container}>
+							{image1 && (
+								<Image
+									source={{ uri: image1 }}
+									style={{ width: 200, height: 200 }}
+								/>
+							)}
+							<View
+								style={imageUploaderStyles.uploadBtnContainer}
+							>
+								<TouchableOpacity
+									onPress={addImage1}
+									style={imageUploaderStyles.uploadBtn}
+								>
+									<Text>
+										{image1 ? "Edit" : "Upload"} Image
+									</Text>
+									<AntDesign
+										name="camera"
+										size={20}
+										color="black"
+									/>
+								</TouchableOpacity>
+							</View>
+						</View>
+						<View style={imageUploaderStyles.container}>
+							{image2 && (
+								<Image
+									source={{ uri: image2 }}
+									style={{ width: 200, height: 200 }}
+								/>
+							)}
+							<View
+								style={imageUploaderStyles.uploadBtnContainer}
+							>
+								<TouchableOpacity
+									onPress={addImage2}
+									style={imageUploaderStyles.uploadBtn}
+								>
+									<Text>
+										{image2 ? "Edit" : "Upload"} Image
+									</Text>
+									<AntDesign
+										name="camera"
+										size={20}
+										color="black"
+									/>
+								</TouchableOpacity>
+							</View>
+						</View>
+						<View style={imageUploaderStyles.container}>
+							{image && (
+								<Image
+									source={{ uri: image }}
+									style={{ width: 200, height: 200 }}
+								/>
+							)}
+							<View
+								style={imageUploaderStyles.uploadBtnContainer}
+							>
+								<TouchableOpacity
+									onPress={addImage}
+									style={imageUploaderStyles.uploadBtn}
+								>
+									<Text>
+										{image ? "Edit" : "Upload"} Image
+									</Text>
+									<AntDesign
+										name="camera"
+										size={20}
+										color="black"
+									/>
+								</TouchableOpacity>
+							</View>
+						</View>
+					</ScrollView>
+					<Text style={[styles.h2, styles.text]}>Notes Section</Text>
+					<TextInput
+						style={styles.notesInput}
+						onChangeText={onChangeNote}
+						value={note}
+					/>
+					<Button
+						onPress={() => {
+							// axios({
+							// 	method: 'post',
+							// 	url: 'http://localhost:3000/memories',
+							// 	data: {
+							// 	  date: selectedDate,
+							// 	  destination: location,
+							// 	  rating: rating,
+							// 	  photos: image.uri,
+							// 	  notes: note
+							// 	}
+							//   });
+						}}
+						title="Save"
+						color="#841584"
+					/>
+					{/* <StatusBar style="auto" /> */}
+				</ScrollView>
 			</View>
 		</View>
 	);
@@ -168,7 +261,6 @@ const CreateMemoryPage = () => {
 const datePickerStyles = StyleSheet.create({
 	calendar: {
 		elevation: 2,
-		// height: 200,
 		backgroundColor: "#efefef",
 		position: "relative",
 		overflow: "hidden",
@@ -179,10 +271,10 @@ const imageUploaderStyles = StyleSheet.create({
 	container: {
 		elevation: 2,
 		height: 200,
-		flex: 1, 
 		width: 200,
 		backgroundColor: "#efefef",
 		position: "relative",
+		margin: 10,
 		overflow: "hidden",
 	},
 	uploadBtnContainer: {
@@ -192,7 +284,7 @@ const imageUploaderStyles = StyleSheet.create({
 		bottom: 0,
 		backgroundColor: "lightgrey",
 		width: "100%",
-		// height: "25%",
+		height: "25%",
 	},
 	uploadBtn: {
 		display: "flex",
@@ -237,7 +329,6 @@ const styles = StyleSheet.create({
 	},
 	parentView: {
 		flex: 1,
-		// height: "auto",
 		backgroundColor: "#F3F7F5",
 		borderColor: "green",
 		borderWidth: 1,
