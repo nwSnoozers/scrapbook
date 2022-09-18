@@ -31,9 +31,6 @@ import * as ImagePicker from "expo-image-picker";
 // star rating component
 import StarRating from "react-native-star-rating-widget";
 
-// axios
-// var axios = require('axios');
-
 const CreateMemoryPage = () => {
 	// fonts
 	let [fontsLoaded] = useFonts({
@@ -180,13 +177,13 @@ const CreateMemoryPage = () => {
 									onPress={addImage1}
 									style={imageUploaderStyles.uploadBtn}
 								>
-									<Text>
+									<Text color="#1B463E">
 										{image1 ? "Edit" : "Upload"} Image
 									</Text>
 									<AntDesign
 										name="camera"
 										size={20}
-										color="black"
+										color="#1B463E"
 									/>
 								</TouchableOpacity>
 							</View>
@@ -205,13 +202,13 @@ const CreateMemoryPage = () => {
 									onPress={addImage2}
 									style={imageUploaderStyles.uploadBtn}
 								>
-									<Text>
+									<Text color="#1B463E">
 										{image2 ? "Edit" : "Upload"} Image
 									</Text>
 									<AntDesign
 										name="camera"
 										size={20}
-										color="black"
+										color="#1B463E"
 									/>
 								</TouchableOpacity>
 							</View>
@@ -230,13 +227,13 @@ const CreateMemoryPage = () => {
 									onPress={addImage}
 									style={imageUploaderStyles.uploadBtn}
 								>
-									<Text>
+									<Text color="#1B463E">
 										{image ? "Edit" : "Upload"} Image
 									</Text>
 									<AntDesign
 										name="camera"
 										size={20}
-										color="black"
+										color="#1B463E"
 									/>
 								</TouchableOpacity>
 							</View>
@@ -274,7 +271,27 @@ const CreateMemoryPage = () => {
 					>
 						<Text style={styles.saveText}>Save</Text>
 					</TouchableOpacity>
-					{/* <StatusBar style="auto" /> */}
+					<TouchableOpacity
+						style={styles.deleteMemoryButton}
+						onPress={() => {
+							// axios({
+							// 	method: 'post',
+							// 	url: 'http://localhost:3000/memories',
+							// 	data: {
+							// 	  date: selectedDate,
+							// 	  destination: location,
+							// 	  rating: rating,
+							// 	  photos: image.uri,
+							// 	  notes: note
+							// 	}
+							//   });
+						}}
+						title="Save"
+					>
+						<Text style={styles.deleteMemoryText}>
+							Delete Memory
+						</Text>
+					</TouchableOpacity>
 				</ScrollView>
 			</View>
 		</View>
@@ -299,6 +316,7 @@ const imageUploaderStyles = StyleSheet.create({
 		position: "relative",
 		margin: 10,
 		overflow: "hidden",
+		borderRadius: 8,
 	},
 	uploadBtnContainer: {
 		opacity: 0.7,
@@ -395,6 +413,8 @@ const styles = StyleSheet.create({
 		paddingBottom: 15,
 		borderColor: "#1B463E",
 		borderRadius: 8,
+		borderWidth: 1,
+		marginTop: 10,
 	},
 	deleteMemoryText: {
 		color: "#1B463E",
