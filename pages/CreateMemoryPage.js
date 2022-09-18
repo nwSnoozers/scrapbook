@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-// import { StatusBar } from "expo-status-bar";
 import {
 	StyleSheet,
 	Text,
@@ -18,11 +17,11 @@ import {
 	SpaceMono_700Bold_Italic,
 } from "@expo-google-fonts/space-mono";
 
-// date picker import
-// import DatePicker from "react-native-date-picker";
+// date picker imports
 import { Button } from "react-native";
 import DatePicker from "react-native-modern-datepicker";
 import { Image } from "react-native";
+import { getToday, getFormatedDate } from "react-native-modern-datepicker";
 
 // photo upload imports
 import { Platform, TouchableOpacity } from "react-native";
@@ -46,10 +45,17 @@ const CreateMemoryPage = () => {
 	const [location, onChangeLocation] = React.useState("Where did you go?");
 	const [rating, setRating] = useState(0);
 
-	// date picker consts
-	// const [date, setDate] = useState(new Date());
-	// const [open, setOpen] = useState(false);
-	const [selectedDate, setSelectedDate] = useState("");
+	// date picker consts + functions
+	const [selectedDate, setSelectedDate] = useState(getToday());
+
+	let displayDate = getFormatedDate(selectedDate, "MMM DD YYYY");
+	console.log("selectedDate: ", selectedDate);
+	console.log("displayDate: ", displayDate);
+
+	const onSelectedChangeHandler = (date) => {
+		setSelectedDate(date);
+		displayDate = getFormatedDate(selectedDate, "MMM DD YYYY");
+	};
 
 	// image upload consts
 	const [image, setImage] = useState(null);
@@ -74,12 +80,12 @@ const CreateMemoryPage = () => {
 				style={styles.scrollView}
 			>
 				<Text style={[styles.dateTitle, styles.text]}>
-					Date goes here
+					{displayDate}
 				</Text>
 				<Text style={[styles.h2, styles.text]}>Select your date</Text>
 				<DatePicker
 					style={datePickerStyles.calendar}
-					onSelectedChange={(date) => setSelectedDate(date)}
+					onSelectedChange={onSelectedChangeHandler}
 				/>
 				<Text style={[styles.h2, styles.text]}>Where did you go?</Text>
 				<TextInput
@@ -87,8 +93,17 @@ const CreateMemoryPage = () => {
 					onChangeText={onChangeLocation}
 					value={location}
 				/>
-				<Text style={[styles.h2, styles.text]}>Your rating</Text>
-				<StarRating rating={rating} onChange={setRating} />
+				<View style={styles.ratingView}>
+					<Text style={[styles.h2, styles.text, styles.ratingText]}>
+						Your rating
+					</Text>
+					<StarRating
+						style={styles.ratingStars}
+						rating={rating}
+						onChange={setRating}
+					/>
+				</View>
+
 				<Text style={[styles.h2, styles.text]}>Media</Text>
 				<View style={imageUploaderStyles.container}>
 					{image && (
@@ -162,14 +177,13 @@ const imageUploaderStyles = StyleSheet.create({
 const styles = StyleSheet.create({
 	text: {
 		color: "#1B463E",
-		// font not working
-		fontFamily: "SpaceMono_700Bold",
 	},
 	dateTitle: {
 		fontSize: 40,
 		fontWeight: "bold",
 		marginTop: 20,
 		marginBottom: 20,
+		fontFamily: "SpaceMono_700Bold",
 	},
 	h2: {
 		fontSize: 20,
@@ -192,12 +206,11 @@ const styles = StyleSheet.create({
 		marginVertical: 12,
 		borderWidth: 1,
 		padding: 10,
+		overflow: "hidden",
 	},
 	parentView: {
-		flex: 1,
-		height: "auto",
-		maxHeight: Dimensions.get("window").height,
-		// paddingTop: StatusBar.currentHeight,
+		// flex: 1,
+		// height: "auto",
 		backgroundColor: "#F3F7F5",
 	},
 	scrollView: {
@@ -206,7 +219,18 @@ const styles = StyleSheet.create({
 	},
 
 	contentContainer: {
-		flexGrow: 1,
+		// flexGrow: 1,
+	},
+	ratingView: {
+		flexDirection: "row",
+	},
+	ratingText: {
+		flex: 1,
+	},
+	ratingStars: {
+		flex: 2,
+		alignSelf: "center",
+		marginTop: 10,
 	},
 });
 
