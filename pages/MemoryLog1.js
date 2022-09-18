@@ -31,7 +31,7 @@ import * as ImagePicker from "expo-image-picker";
 // star rating component
 import StarRating from "react-native-star-rating-widget";
 
-const CreateMemoryPage = () => {
+const MemoryLog1 = () => {
 	// fonts
 	let [fontsLoaded] = useFonts({
 		SpaceMono_400Regular,
@@ -42,7 +42,9 @@ const CreateMemoryPage = () => {
 
 	// text input consts
 	const [location, onChangeLocation] = React.useState("Where did you go?");
-	const [note, onChangeNote] = React.useState("What stood out from today?");
+	const [note, onChangeNote] = React.useState(
+		"Met Hack the North, HackWestern, ElleHacks, and other Canadian hackathon organizers at Hackcon X! They are awesome and really kind people :D"
+	);
 	const [rating, setRating] = useState(0);
 
 	// date picker consts + functions
@@ -99,20 +101,6 @@ const CreateMemoryPage = () => {
 		}
 	};
 
-	function getPhotoUris () {
-		var imageUris = [];
-		if (image1) {
-			imageUris.push(image1);
-		}
-		if (image2) {
-			imageUris.push(image2);
-		}
-		if (image) {
-			imageUris.push(image);
-		}
-		return imageUris;
-	}
-
 	return (
 		<View style={styles.parentView}>
 			<View
@@ -131,23 +119,38 @@ const CreateMemoryPage = () => {
 					style={styles.scrollView}
 				>
 					<Text style={[styles.dateTitle, styles.text]}>
-						{displayDate}
+						Aug 28 2022
 					</Text>
-					<Text style={[styles.h2, styles.text]}>
-						Select your date
-					</Text>
-					<DatePicker
-						style={datePickerStyles.calendar}
-						onSelectedChange={onSelectedChangeHandler}
-					/>
+
 					<Text style={[styles.h2, styles.text]}>
 						Where did we go?
 					</Text>
-					<TextInput
-						style={[styles.locationInput, styles.input]}
-						onChangeText={onChangeLocation}
-						value={location}
-					/>
+					<View style={styles.locationBox}>
+						<View style={styles.locationImageContainer}>
+							<Image
+								style={styles.locationImage}
+								source={require("../assets/hackcon5.jpeg")}
+							/>
+						</View>
+						<View style={styles.locationContent}>
+							<Text style={[styles.locationTitle]}>
+								Hackcon X
+							</Text>
+							<Text style={[styles.locationPlace]}>New York</Text>
+							<View style={styles.locationTags}>
+								<View style={styles.locationTag}>
+									<Text>Conference</Text>
+								</View>
+								<View style={styles.locationTag}>
+									<Text>Travel</Text>
+								</View>
+								<View style={styles.locationTag}>
+									<Text>Fun</Text>
+								</View>
+							</View>
+						</View>
+					</View>
+
 					<View style={styles.ratingView}>
 						<Text
 							style={[styles.h2, styles.text, styles.ratingText]}
@@ -156,121 +159,37 @@ const CreateMemoryPage = () => {
 						</Text>
 						<StarRating
 							style={styles.ratingStars}
-							rating={rating}
+							rating={5}
 							onChange={setRating}
 						/>
 					</View>
 
 					<Text style={[styles.h2, styles.text]}>Media</Text>
 					<ScrollView horizontal={true}>
-						<View style={imageUploaderStyles.container}>
-							{image1 && (
-								<Image
-									source={{ uri: image1 }}
-									style={{ width: 200, height: 200 }}
-								/>
-							)}
-							<View
-								style={imageUploaderStyles.uploadBtnContainer}
-							>
-								<TouchableOpacity
-									onPress={addImage1}
-									style={imageUploaderStyles.uploadBtn}
-								>
-									<Text color="#1B463E">
-										{image1 ? "Edit" : "Upload"} Image
-									</Text>
-									<AntDesign
-										name="camera"
-										size={20}
-										color="#1B463E"
-									/>
-								</TouchableOpacity>
-							</View>
-						</View>
-						<View style={imageUploaderStyles.container}>
-							{image2 && (
-								<Image
-									source={{ uri: image2 }}
-									style={{ width: 200, height: 200 }}
-								/>
-							)}
-							<View
-								style={imageUploaderStyles.uploadBtnContainer}
-							>
-								<TouchableOpacity
-									onPress={addImage2}
-									style={imageUploaderStyles.uploadBtn}
-								>
-									<Text color="#1B463E">
-										{image2 ? "Edit" : "Upload"} Image
-									</Text>
-									<AntDesign
-										name="camera"
-										size={20}
-										color="#1B463E"
-									/>
-								</TouchableOpacity>
-							</View>
-						</View>
-						<View style={imageUploaderStyles.container}>
-							{image && (
-								<Image
-									source={{ uri: image }}
-									style={{ width: 200, height: 200 }}
-								/>
-							)}
-							<View
-								style={imageUploaderStyles.uploadBtnContainer}
-							>
-								<TouchableOpacity
-									onPress={addImage}
-									style={imageUploaderStyles.uploadBtn}
-								>
-									<Text color="#1B463E">
-										{image ? "Edit" : "Upload"} Image
-									</Text>
-									<AntDesign
-										name="camera"
-										size={20}
-										color="#1B463E"
-									/>
-								</TouchableOpacity>
-							</View>
-						</View>
+						<Image
+							style={styles.mediaImage}
+							source={require("../assets/hackcon1.jpg")}
+						/>
+						<Image
+							style={styles.mediaImage}
+							source={require("../assets/hackcon3.jpg")}
+						/>
+						<Image
+							style={styles.mediaImage}
+							source={require("../assets/hackcon2.jpg")}
+						/>
 					</ScrollView>
 					<Text style={[styles.h2, styles.text]}>Notes Section</Text>
-					<TextInput
+					<Text
 						style={[styles.notesInput, styles.input]}
-						onChangeText={onChangeNote}
+						// onChangeText={onChangeNote}
 						value={note}
-					/>
-					<TouchableOpacity
-						style={styles.saveButton}
-						onPress={async () => {
-							const body = {
-								date: selectedDate,
-								destination: location,
-								rating: rating,
-								photos: getPhotoUris(),
-								notes: note
-							  }
-							await fetch(
-							  `http://10.33.134.6:3000/memories`,
-							  {
-								method: 'POST',
-								headers: {
-								  'Content-Type': 'application/json',
-								},
-								body: JSON.stringify(body)
-							  }
-							);
-					}
-				}
-						title="Save"
 					>
-						<Text style={styles.saveText}>Save</Text>
-					</TouchableOpacity>
+						Met Hack the North, HackWestern, ElleHacks, and other
+						Canadian hackathon organizers at Hackcon X! They are
+						awesome and really kind people :D
+					</Text>
+
 					<TouchableOpacity
 						style={styles.deleteMemoryButton}
 						onPress={() => {
@@ -342,7 +261,7 @@ const styles = StyleSheet.create({
 		fontSize: 40,
 		fontWeight: "bold",
 		marginTop: 20,
-		marginBottom: 20,
+		marginBottom: 0,
 		fontFamily: "SpaceMono_700Bold",
 	},
 	h2: {
@@ -351,17 +270,55 @@ const styles = StyleSheet.create({
 		marginTop: 20,
 		marginBottom: 10,
 	},
+	locationBox: {
+		width: "99%",
+		borderRadius: 8,
+		backgroundColor: "#ffffff",
+		padding: 10,
+		flexDirection: "row",
+	},
+	locationContent: {
+		marginLeft: 10,
+	},
+	locationImage: {
+		width: 100,
+		height: 100,
+		borderRadius: 8,
+	},
+	locationTitle: {
+		fontSize: 20,
+		fontWeight: "bold",
+		color: "#1B463E",
+		marginTop: 10,
+	},
+	locationPlace: {
+		marginTop: 5,
+	},
+	locationTags: {
+		flexDirection: "row",
+		marginTop: 10,
+	},
+	locationTag: {
+		backgroundColor: "#F5F5F5",
+		paddingHorizontal: 8,
+		paddingVertical: 2,
+		marginRight: 5,
+		borderRadius: 15,
+		borderWidth: 1,
+		borderColor: "#C2C2C2",
+	},
 	input: {
 		borderRadius: 8,
 		borderWidth: 1,
-		borderColor: "#1B463E",
+		borderColor: "#DDDDDD",
 	},
-	locationInput: {
-		width: "99%",
-		textAlignVertical: "top",
-		marginVertical: 12,
-		padding: 10,
+	mediaImage: {
+		width: 200,
+		height: 200,
+		borderRadius: 8,
+		marginRight: 10,
 	},
+
 	notesInput: {
 		flex: 1,
 		height: 100,
@@ -370,6 +327,7 @@ const styles = StyleSheet.create({
 		marginVertical: 12,
 		padding: 10,
 		overflow: "hidden",
+		flexWrap: "wrap",
 	},
 	parentView: {
 		flex: 1,
@@ -397,17 +355,6 @@ const styles = StyleSheet.create({
 		alignSelf: "center",
 		marginTop: 10,
 	},
-	saveButton: {
-		paddingTop: 15,
-		paddingBottom: 15,
-		backgroundColor: "#1B463E",
-		borderRadius: 8,
-	},
-	saveText: {
-		color: "#ffffff",
-		fontWeight: "bold",
-		textAlign: "center",
-	},
 	deleteMemoryButton: {
 		paddingTop: 15,
 		paddingBottom: 15,
@@ -415,7 +362,7 @@ const styles = StyleSheet.create({
 		borderRadius: 8,
 		borderWidth: 1,
 		marginTop: 10,
-		marginBottom: 10,
+		marginBottom: 20,
 	},
 	deleteMemoryText: {
 		color: "#e32f45",
@@ -424,4 +371,4 @@ const styles = StyleSheet.create({
 	},
 });
 
-export default CreateMemoryPage;
+export default MemoryLog1;

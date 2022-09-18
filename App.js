@@ -3,6 +3,7 @@ import React from "react";
 import CreateMemoryPage from "./pages/CreateMemoryPage";
 import CalendarPage from "./pages/CalendarPage";
 import MemoriesPage from "./pages/MemoriesPage";
+import MemoryLog1 from "./pages/MemoryLog1";
 import Svg from "react-native-svg";
 
 import { NavigationContainer } from "@react-navigation/native";
@@ -10,22 +11,6 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
 
 const Tab = createBottomTabNavigator();
-
-// const CustomTabBarButton = ({children, onPress}) => (
-// 	<TouchableOpacity
-// 		style={
-// 			top: -30,
-// 			justifyContent: 'center',
-// 			alignItems: 'center',
-// 			...styles.shadow
-// 		}}
-// 		onPress={onPress}
-// 	>
-// 	<View style={{width: 70}}>
-// 		{children}
-// 	</View>
-// 	</TouchableOpacity>
-// );
 
 export default function App() {
 	return (
@@ -49,7 +34,7 @@ export default function App() {
 				{/* place holder */}
 				<Tab.Screen
 					name="Home"
-					component={CalendarPage}
+					component={MemoryLog1}
 					options={{
 						tabBarIcon: ({ focused }) => (
 							<View
