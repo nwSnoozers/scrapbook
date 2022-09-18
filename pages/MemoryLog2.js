@@ -31,7 +31,7 @@ import * as ImagePicker from "expo-image-picker";
 // star rating component
 import StarRating from "react-native-star-rating-widget";
 
-const MemoryLog1 = () => {
+const MemoryLog2 = () => {
 	// fonts
 	let [fontsLoaded] = useFonts({
 		SpaceMono_400Regular,
@@ -41,16 +41,10 @@ const MemoryLog1 = () => {
 	});
 
 	// text input consts
-	const [location, onChangeLocation] = React.useState("Where did you go?");
-	const [note, onChangeNote] = React.useState(
-		"Met Hack the North, HackWestern, ElleHacks, and other Canadian hackathon organizers at Hackcon X! They are awesome and really kind people :D"
-	);
 	const [rating, setRating] = useState(0);
 
 	// date picker consts + functions
 	const [selectedDate, setSelectedDate] = useState(getToday());
-
-	let displayDate = getFormatedDate(selectedDate, "MMM DD YYYY");
 
 	const onSelectedChangeHandler = (date) => {
 		setSelectedDate(date);
@@ -119,7 +113,7 @@ const MemoryLog1 = () => {
 					style={styles.scrollView}
 				>
 					<Text style={[styles.dateTitle, styles.text]}>
-						Aug 28 2022
+						Sep 17 2022
 					</Text>
 
 					<Text style={[styles.h2, styles.text]}>
@@ -129,23 +123,20 @@ const MemoryLog1 = () => {
 						<View style={styles.locationImageContainer}>
 							<Image
 								style={styles.locationImage}
-								source={require("../assets/hackcon5.jpeg")}
+								source={require("../assets/htn.jpeg")}
 							/>
 						</View>
 						<View style={styles.locationContent}>
 							<Text style={[styles.locationTitle]}>
-								Hackcon X
+								Hack the North 2022
 							</Text>
-							<Text style={[styles.locationPlace]}>New York</Text>
+							<Text style={[styles.locationPlace]}>Waterloo</Text>
 							<View style={styles.locationTags}>
 								<View style={styles.locationTag}>
-									<Text>Conference</Text>
+									<Text>Learning</Text>
 								</View>
 								<View style={styles.locationTag}>
-									<Text>Travel</Text>
-								</View>
-								<View style={styles.locationTag}>
-									<Text>Fun</Text>
+									<Text>Community</Text>
 								</View>
 							</View>
 						</View>
@@ -168,22 +159,23 @@ const MemoryLog1 = () => {
 					<ScrollView horizontal={true}>
 						<Image
 							style={styles.mediaImage}
-							source={require("../assets/hackcon1.jpg")}
+							source={require("../assets/htn4.jpg")}
 						/>
 						<Image
 							style={styles.mediaImage}
-							source={require("../assets/hackcon3.jpg")}
+							source={require("../assets/htn2.jpg")}
 						/>
 						<Image
 							style={styles.mediaImage}
-							source={require("../assets/hackcon2.jpg")}
+							source={require("../assets/htn1.jpg")}
 						/>
 					</ScrollView>
 					<Text style={[styles.h2, styles.text]}>Notes Section</Text>
 					<Text style={[styles.notesInput, styles.input]}>
-						Met Hack the North, HackWestern, ElleHacks, and other
-						Canadian hackathon organizers at Hackcon X! They are
-						awesome and really kind people :D
+						We attended Hack the North 2022, and for some of us, it
+						was our first in-person hackathon! {"\n"}
+						{"\n"}
+						#foodpoisoningcantstopus
 					</Text>
 
 					<TouchableOpacity
@@ -367,4 +359,4 @@ const styles = StyleSheet.create({
 	},
 });
 
-export default MemoryLog1;
+export default MemoryLog2;

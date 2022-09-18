@@ -4,6 +4,7 @@ import CreateMemoryPage from "./pages/CreateMemoryPage";
 import CalendarPage from "./pages/CalendarPage";
 import MemoriesPage from "./pages/MemoriesPage";
 import MemoryLog1 from "./pages/MemoryLog1";
+import MemoryLog2 from "./pages/MemoryLog2";
 import Svg from "react-native-svg";
 
 import { NavigationContainer } from "@react-navigation/native";
@@ -34,7 +35,7 @@ export default function App() {
 				{/* place holder */}
 				<Tab.Screen
 					name="Home"
-					component={MemoryLog1}
+					component={MemoryLog2}
 					options={{
 						tabBarIcon: ({ focused }) => (
 							<View
