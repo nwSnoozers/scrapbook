@@ -7,11 +7,41 @@ import MemoryLog1 from "./pages/MemoryLog1";
 import MemoryLog2 from "./pages/MemoryLog2";
 import Svg from "react-native-svg";
 
-import { NavigationContainer } from "@react-navigation/native";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
+import { NavigationContainer } from '@react-navigation/native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
+import HomePage from "./pages/HomePage";
+import ResultPage from "./pages/ResultPage";
 
 const Tab = createBottomTabNavigator();
+
+// const CustomTabBarButton = ({children, onPress}) => (
+// 	<TouchableOpacity
+// 		style={
+// 			top: -30,
+// 			justifyContent: 'center',
+// 			alignItems: 'center',
+// 			...styles.shadow
+// 		}}
+// 		onPress={onPress}
+// 	>
+// 	<View style={{width: 70}}>
+// 		{children}
+// 	</View> 
+// 	</TouchableOpacity>
+// );
+
+const Stack = createNativeStackNavigator();
+function HomeNavigator() {
+	return (
+		<Stack.Navigator initialRouteName='Home'>
+			<Stack.Screen name="Result" component={ResultPage}></Stack.Screen>
+			<Stack.Screen name="Home" component={HomePage}></Stack.Screen>
+		</Stack.Navigator>
+	);
+}
+
 
 export default function App() {
 	return (
@@ -35,7 +65,7 @@ export default function App() {
 				{/* place holder */}
 				<Tab.Screen
 					name="Home"
-					component={MemoryLog2}
+					component={HomeNavigator}
 					options={{
 						tabBarIcon: ({ focused }) => (
 							<View
