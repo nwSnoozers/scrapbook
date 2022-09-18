@@ -6,13 +6,17 @@ import { StyleSheet, Text, View, TextInput, ScrollView } from "react-native";
 // import DatePicker from "react-native-date-picker";
 import { Button } from "react-native";
 import DatePicker from "react-native-modern-datepicker";
+import { Image } from 'react-native'
 
 // photo upload imports
-import { Image, Platform, TouchableOpacity } from "react-native";
+import { Platform, TouchableOpacity } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import * as ImagePicker from "expo-image-picker";
 
-const MemoryPage = () => {
+// star rating component
+import StarRating from 'react-native-star-rating-widget';
+
+const CalendarPage = () => {
 	// text input consts
 	const [note, onChangeNote] = React.useState("Add your notes here");
 	const [location, onChangeLocation] = React.useState("Where did you go?");
@@ -42,7 +46,6 @@ const MemoryPage = () => {
 		<ScrollView style={styles.scrollView}>
 			<Text>Memory</Text>
 			<Text>Date</Text>
-
 			<DatePicker
 				style={datePickerStyles.calendar}
 				onSelectedChange={(date) => setSelectedDate(date)}
@@ -88,6 +91,7 @@ const datePickerStyles = StyleSheet.create({
 	calendar: {
 		elevation: 2,
 		height: 200,
+		// width: 200,
 		backgroundColor: "#efefef",
 		position: "relative",
 		overflow: "hidden",
@@ -136,7 +140,6 @@ const styles = StyleSheet.create({
 		borderWidth: 1,
 		padding: 10,
 	},
-	// scrolling flings back to the top at the moment
 	scrollView: {
 		marginHorizontal: 20,
 		marginTop: 100,
@@ -149,4 +152,4 @@ const styles = StyleSheet.create({
 	},
 });
 
-export default MemoryPage;
+export default CalendarPage;
