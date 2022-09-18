@@ -44,6 +44,7 @@ const CalendarPage = () => {
 		<ScrollView style={styles.scrollView}>
 			<Text>Memory</Text>
 			<Text>Date</Text>
+
 			<DatePicker
 				style={datePickerStyles.calendar}
 				onSelectedChange={(date) => setSelectedDate(date)}
@@ -89,7 +90,6 @@ const datePickerStyles = StyleSheet.create({
 	calendar: {
 		elevation: 2,
 		height: 200,
-		// width: 200,
 		backgroundColor: "#efefef",
 		position: "relative",
 		overflow: "hidden",
@@ -138,6 +138,7 @@ const styles = StyleSheet.create({
 		borderWidth: 1,
 		padding: 10,
 	},
+	// scrolling flings back to the top at the moment
 	scrollView: {
 		marginHorizontal: 20,
 		// marginTop: 100,
