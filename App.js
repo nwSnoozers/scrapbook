@@ -39,7 +39,8 @@ export default function App() {
 					'elevation': 0, 
 					'backgroundColor': '#ffffff',
 					'borderRadius': 15,
-					'height': 90
+					'height': 70,
+					'marginTop': 0
 				},
 				null
 			]
@@ -64,7 +65,7 @@ export default function App() {
 				),
 		}} />
         <Tab.Screen name="Memories" 
-					component={CalendarPage} 
+					component={MemoriesPage} 
 					options={{
 						tabBarIcon: ({focused}) => (
 							<View style={{alignItems: 'center', justifyContent: 'center', top: 10}}>
